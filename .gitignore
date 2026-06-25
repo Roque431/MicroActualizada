@@ -1,0 +1,43 @@
+# Entorno virtual
+env/
+venv/
+.venv/
+
+# Credenciales — NUNCA commitear
+microservicio/.env
+*.env
+!*.env.example
+
+# Archivos compilados Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Modelos grandes (joblib binarios pesados)
+# Se reconstruyen con los notebooks de entrenamiento
+models/*.joblib
+# Conservar el modelo NER (es parte del proyecto de tesis)
+!models/ner_clinico_es/
+
+# Logs y temporales
+*.log
+sesiones_voz/
+
+# VS Code
+.vscode/settings.json
+
+# Docker volumes (datos de PostgreSQL)
+pgdata/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+CV_*.pdf
+.claude/

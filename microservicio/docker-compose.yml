@@ -1,0 +1,52 @@
+services:
+
+  # ── Base de datos PostgreSQL ─────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB:       ${POSTGRES_DB:-epidiagnostix}
+      POSTGRES_USER:     ${POSTGRES_USER:-epiadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-epiadmin} -d ${POSTGRES_DB:-epidiagnostix}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - epidnet
+
+  # ── API FastAPI ───────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-epiadmin}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-epidiagnostix}
+      MODEL_DIR: /app/models
+      # Con API key → extractor LLM (Claude). Sin ella → extractor regex offline.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      # Los modelos ya entrenados se montan read-only desde la carpeta padre
+      - ../models:/app/models:ro
+    networks:
+      - epidnet
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  epidnet:
+    driver: bridge

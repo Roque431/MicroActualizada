@@ -1,0 +1,142 @@
+{
+  "info": {
+    "name": "EpiDiagnostix-Mayab ML API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Colección de pruebas para el microservicio ML de EpiDiagnostix-Mayab"
+  },
+  "variable": [{ "key": "base_url", "value": "http://localhost:8000" }],
+  "item": [
+    {
+      "name": "Health",
+      "item": [{
+        "name": "GET /health",
+        "request": {
+          "method": "GET",
+          "url": "{{base_url}}/health"
+        }
+      }]
+    },
+    {
+      "name": "Extracción NER",
+      "item": [
+        {
+          "name": "Caso 1 — SOAP clásico",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/extraccion",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"Consulta médica. Paciente masculino de 45 años de edad. Peso 82.0 kg, talla 170.5 cm. Motivo: dolor abdominal, diarrea, deshidratación, 5 días de evolución. Signos vitales: presión arterial de 125/82 mmHg, glucosa de 98 mg/dl, temperatura 37.2°C, frecuencia cardiaca de 91 latidos por minuto.\"}" }
+          }
+        },
+        {
+          "name": "Caso 2 — Dictado rápido abreviado",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/extraccion",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"Paciente femenina, 67 años. PA: 160/95, glucemia capilar 310 mg/dL. T: 36.8 grados. FC: 88 lpm. Peso 63.5 kg, estatura de 155.0 cm. Síntomas: fatiga y pérdida de peso desde hace 3 días.\"}" }
+          }
+        },
+        {
+          "name": "Caso 3 — Coloquial comunidad",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/extraccion",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"Se atiende a mujer de 32 años que lleva 7 días con tos y dificultad para respirar. Presión 118 sobre 74, azúcar en sangre 89, temperatura 38.5, pulso 102. Pesa 58 kilos, mide 162 cm.\"}" }
+          }
+        },
+        {
+          "name": "Caso 4 — Pediátrico vacunación",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/extraccion",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"Paciente masculino, edad: 2 años. Consulta por fiebre leve postvacuna y control de esquema de vacunación con 1 día de evolución. Peso corporal: 12.5 kg, talla 82.0 centímetros. Tensión arterial 100/65 mmHg, temperatura de 37.8 grados, frecuencia cardiaca de 110 lpm, glucosa 88 mg/dl.\"}" }
+          }
+        },
+        {
+          "name": "Caso 5 — Texto libre sin estructura",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/extraccion",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"La señora tiene como 55 años, es hipertensa, refiere zumbido en los oídos y visión borrosa desde hace 4 días. Le tomé la presión y salió 170 sobre 100. Su azúcar estaba bien, 95. Temperatura normal 36.5. Pulso 78. Pesa como 70 kilos y mide 158 centímetros.\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Detección de Anomalías",
+      "item": [
+        {
+          "name": "POST /deteccion-anomalias — Paciente normal",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/deteccion-anomalias",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"edad\":34,\"peso_kg\":72.4,\"talla_cm\":151.4,\"presion_sistolica\":118,\"presion_diastolica\":75,\"glucosa_mg_dl\":87,\"temperatura_c\":37.0,\"frecuencia_cardiaca_bpm\":77,\"duracion_sintomas_dias\":3,\"categoria_sintoma\":\"Respiratorio\"}" }
+          }
+        },
+        {
+          "name": "POST /deteccion-anomalias — Paciente anómalo (glucosa 341, fiebre)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/deteccion-anomalias",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"edad\":63,\"peso_kg\":68.8,\"talla_cm\":149.4,\"presion_sistolica\":165,\"presion_diastolica\":83,\"glucosa_mg_dl\":341,\"temperatura_c\":39.0,\"frecuencia_cardiaca_bpm\":113,\"duracion_sintomas_dias\":1,\"categoria_sintoma\":\"Respiratorio\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consulta Completa",
+      "item": [
+        {
+          "name": "POST /consulta-completa — Caso 1 SOAP",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/consulta-completa",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"Consulta médica. Paciente masculino de 45 años de edad. Peso 82.0 kg, talla 170.5 cm. Motivo: dolor abdominal, diarrea, deshidratación, 5 días de evolución. Signos vitales: presión arterial de 125/82 mmHg, glucosa de 98 mg/dl, temperatura 37.2°C, frecuencia cardiaca de 91 latidos por minuto.\"}" }
+          }
+        },
+        {
+          "name": "POST /consulta-completa — Caso 3 Coloquial",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/consulta-completa",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"Se atiende a mujer de 32 años que lleva 7 días con tos y dificultad para respirar. Presión 118 sobre 74, azúcar en sangre 89, temperatura 38.5, pulso 102. Pesa 58 kilos, mide 162 cm.\"}" }
+          }
+        },
+        {
+          "name": "POST /consulta-completa — Paciente anómalo (texto libre)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/consulta-completa",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"texto\": \"Paciente femenina de 63 años. Presión arterial de 165/83 mmHg, glucosa de 341 mg/dl, temperatura 39.0°C, frecuencia cardiaca de 113 lpm. Peso 68.8 kg, talla 149.4 cm. 1 día de evolución. Categoría respiratorio.\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Historial",
+      "item": [
+        {
+          "name": "GET /inferencias — todas",
+          "request": { "method": "GET", "url": "{{base_url}}/inferencias?limit=10" }
+        },
+        {
+          "name": "GET /inferencias — solo completas",
+          "request": { "method": "GET", "url": "{{base_url}}/inferencias?tipo=completa&limit=10" }
+        },
+        {
+          "name": "GET /inferencias — solo anomalias",
+          "request": { "method": "GET", "url": "{{base_url}}/inferencias?tipo=anomalia&limit=10" }
+        }
+      ]
+    }
+  ]
+}
