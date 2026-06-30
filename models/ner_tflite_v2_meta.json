@@ -1,0 +1,10 @@
+{
+  "vocab_size": 2196,
+  "n_labels": 14,
+  "max_len": 40,
+  "params": 248718,
+  "epocas": 32,
+  "macro_f1_test_sintetico": 0.9118,
+  "set2_55casos_pct": 90.0,
+  "set3_20ciegos_pct": 87.8
+}

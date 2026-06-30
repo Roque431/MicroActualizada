@@ -170,7 +170,7 @@ def extraer_variables_local(texto: str) -> dict:
 
     def _pa(txt):
         for p in [
-            r'(?:presi[oó]n\s+(?:arterial\s+)?(?:de\s+)?|PA[:\s]+)(\d{2,3})\s*[/\-sobre\s]+(\d{2,3})',
+            r'(?:presi[oó]n\s+(?:arterial\s+)?(?:de\s+)?|tensi[oó]n\s+(?:arterial\s+)?(?:de\s+)?|PA[:\s]+|TA[:\s]+)(\d{2,3})\s*[/\-]\s*(\d{2,3})',
             r'(\d{2,3})\s+sobre\s+(\d{2,3})',
         ]:
             m = re.search(p, txt, re.I)

@@ -1,0 +1,25 @@
+{
+  "vocab_size": 1981,
+  "n_labels": 14,
+  "max_len": 40,
+  "embed_dim": 64,
+  "lstm1_units": 128,
+  "lstm2_units": 64,
+  "total_params": 234958,
+  "epochs_entrenados": 30,
+  "mejor_val_loss": 1.5359364624600857e-06,
+  "macro_f1_test": 1.0,
+  "f1_por_campo": {
+    "EDAD": 1.0,
+    "SEXO": 1.0,
+    "PESO_KG": 1.0,
+    "TALLA_CM": 1.0,
+    "PRESION_SIS": 1.0,
+    "PRESION_DIA": 1.0,
+    "GLUCOSA": 1.0,
+    "TEMPERATURA": 1.0,
+    "FREC_CARD": 1.0,
+    "DURACION": 1.0,
+    "CATEGORIA": 1.0
+  }
+}
