@@ -31,7 +31,7 @@ services:
       # Con API key → extractor LLM (Claude). Sin ella → extractor regex offline.
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       # Los modelos ya entrenados se montan read-only desde la carpeta padre
       - ../models:/app/models:ro
